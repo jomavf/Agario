@@ -6,12 +6,16 @@ class Circle{
         this.vel = createVector(0,0);
         this.area = rect(this.pos.x-this.r/2,this.pos.y-this.r/2,this.r*2,this.r*2)
         this.textColor = 'white';
+        this.acc = createVector(0,0);
+    }
+    applyFroce(force){
+        this.acc.add(force);
     }
     update(n=3){
-        let newvel = createVector(mouseX-width/2,mouseY-height/2);
+        let acc = createVector(mouseX-width/2,mouseY-height/2);
         let mag = n;
-        newvel.setMag(mag/(this.r/0.1));
-        this.vel.lerp(newvel,0.05);
+        acc.setMag(mag/(this.r/0.1));
+        this.vel.lerp(acc,0.05);
         this.pos.add(this.vel);
     }
     show(){

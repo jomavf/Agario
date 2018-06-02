@@ -13,7 +13,7 @@ function setup() {
 	grid = new Grid(50,50);
 	
 	game.createFood(1000);	
-	game.createEnemy(100);	
+	game.createEnemy(200);	
 
 	game.createWall(80);
 	
@@ -66,4 +66,8 @@ function keyPressed(){
 			
 	}
 	
+}
+
+function mousePressed(){
+	game.player[0].r*=2;
 }
