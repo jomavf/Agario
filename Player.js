@@ -1,15 +1,15 @@
 class Player extends Circle{
     constructor(x,y,r){
         super(x,y,r);
-        // this.mousexc = constrain(x,-width,width); 
-        // this.mouseyc = constrain(y,-height,height);
         this.type = "player";
         this.color = "white"
         this.minRangeMouse =200;
         this.textColor = "black"
-        //this.lider = false;
+        this.acc = createVector(0,0);
     }
-
+    applyForce(force){
+        this.acc.add(force);
+    }
     update(n=3){   
         let newvel = createVector(mouseX-width/2,mouseY-height/2);
         //if(!this.lider){newvel = createVector(mouseX-width/2,mouseY-height/2);}     
@@ -56,7 +56,8 @@ class Player extends Circle{
     }
     split(x,y,r){
         if (this.r >=30){
-            let newPlayer = new Player(x+10,y,r*0.5);      
+            let newPlayer = new Player(x+10,y,r*0.5);
+            newPlayer.applyForce(createVector(mouseX,mouseY).setMag(2));      
             game.player.push(newPlayer);
             this.r = this.r*0.5;
         }

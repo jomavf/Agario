@@ -6,24 +6,18 @@ class Enemy extends Circle {
         this.acc = createVector(0,0);
         this.chance = random(1);
     }
-    applyFroce(force){
+    applyForce(force){
         this.acc.add(force);
     }
-    update(n,x,y){
+    update(n){
         let randomAcc = p5.Vector.random2D();
-        this.applyFroce(randomAcc);
-        let mapped = map(this.r,0,this.r,0,1);
-        this.acc.div(mapped);
-        // if (this.chance < 0.3){
-        //     acc = createVector(x-this.pos.x,y-this.pos.y);
-        // }
-        //let mag = n;
-        this.acc.limit(0.5);
-        //this.acc.setMag(1.5);
-        //this.vel.lerp(newvel,0.05);
+        this.applyForce(randomAcc);
+        //let calcularFuerzaMag = sqrt((this.acc.x*this.acc.x)+(this.acc.y*this.acc.y))
+        this.acc.setMag(0.3);
         this.vel.add(this.acc);
         this.pos.add(this.vel);
         this.acc.mult(0);
+    
     }
     eat(other){
         if (other === undefined){return} 
