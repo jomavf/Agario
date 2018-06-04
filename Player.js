@@ -6,6 +6,7 @@ class Player extends Circle{
         this.minRangeMouse =200;
         this.textColor = "black"
         this.acc = createVector(0,0);
+        this.sons = [];
     }
     applyForce(force){
         this.acc.add(force);
@@ -24,20 +25,25 @@ class Player extends Circle{
         newvel.setMag(mag);
         this.vel.lerp(newvel,0.05);
         this.pos.add(this.vel);
-        
+    }
+    showText(){
+        textSize(10*(this.r*0.08));
+        textAlign(CENTER); 
+        let mass =floor(this.r * this.r * PI );
+        text(mass,this.pos.x,this.pos.y);
     }
     show(){
         if(this.gameover){
             return;
         }
-        noStroke();
-        fill(this.color);
+        
+        stroke(0,0,255);
+        //fill(this.color);
+        fill(0,0,255,100);
         ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
         fill(this.textColor);
-        textSize(10*(this.r*0.08));
-        textAlign(CENTER); 
-        let mass =floor(this.r * this.r * PI );
-        text(mass,this.pos.x,this.pos.y);
+        //this.showText();
+
     }
     eat(other){
         let distance = p5.Vector.dist(this.pos,other.pos);
@@ -53,13 +59,10 @@ class Player extends Circle{
         else{
             return false;
         }
-    }
-    split(x,y,r){
-        if (this.r >=30){
-            let newPlayer = new Player(x+10,y,r*0.5);
-            newPlayer.applyForce(createVector(mouseX,mouseY).setMag(2));      
-            game.player.push(newPlayer);
-            this.r = this.r*0.5;
+    }   
+    split(){
+            let nPlayer = new Player((this.x+100),(this.y),(this.r/2));
+            this.sons.push(nPlayer);
+            this.r/=2;
         }
     }
-}

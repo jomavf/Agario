@@ -5,14 +5,14 @@ var grid;
 function setup() {
 	createCanvas(windowWidth,windowHeight);
 	game = new Game();	
-	game.createPlayer(0,0,15);
+	player = game.createPlayer(0,0,35);
 
 
-	confi = new Configuration(game.player[0]);
+	confi = new Configuration(player);
 
 	grid = new Grid(50,50);
 	
-	game.createFood(1000);	
+	//game.createFood(1000);	
 	game.createEnemy(200);	
 
 	game.createWall(80);
@@ -24,15 +24,14 @@ function setup() {
 function draw() {
 	
 	if(game.gameOver){
-		console.log('Perdiste por rata');
+		console.log('Perdiste');
 		noLoop();
-		return;
 	}
 
-	confi.setBackground(100,0,0,100);
+	confi.setBackground();
 	confi.setScreen(width/2,height/2);
 	confi.scl(64);
-	confi.setScreen(-game.player[0].pos.x,-game.player[0].pos.y);
+	confi.setScreen(-player.pos.x,-player.pos.y);
 
 	//game.updateFood(500);
 	game.checkPlayer();
@@ -48,26 +47,17 @@ function draw() {
 	
 }
 
-
-
-function windowResized() {
-	resizeCanvas(windowWidth, windowHeight);
-
-
-}
 function keyPressed(){
-	if(keyCode === ENTER){ 
-		for (let i = 0; i < game.player.length; i++) {
-			let x = game.player[i].pos.x;
-			let y = game.player[i].pos.y;
-			let r = game.player[i].r;
-			game.player[i].split(x,y,r);	
-		}
-			
-	}
-	
+	if(keyCode === ENTER){
+		player.r*=2;
+	}	
 }
 
 function mousePressed(){
-	game.player[0].r*=2;
+	player.split();
 }
+
+function windowResized() {
+	resizeCanvas(windowWidth, windowHeight);
+}
+

@@ -3,18 +3,16 @@ class Game{
         this.food = [];
         this.enemy = [];
         this.wall = [];
-        this.player = [];
+        this.player = undefined;
         this.gameOver = false;
     }
     createPlayer(x,y,r){
-        let newPlayer =  new Player(x,y,r);
-        this.player.push(newPlayer);
+        this.player = new Player(x,y,r);
+        return this.player;
     }
     showPlayer(){
-        for (let i = 0; i < this.player.length; i++) {
-            this.player[i].update(5);
-            this.player[i].show(); 
-        }
+            this.player.update(5);
+            this.player.show(); 
     }  
     createFood(n){
         for (let i = 0; i < n; i++) {
@@ -37,7 +35,6 @@ class Game{
         for (let i = this.food.length - 1; i >= 0; i--) {
             this.food[i].show();
         }
-
     }
     
     createEnemy(n){
@@ -49,14 +46,7 @@ class Game{
     }
     showEnemy(){
         for (let i = this.enemy.length-1; i >= 0; i--) {
-            if(this.player.length === 0){
-                this.gameOver=true;
-                return;
-            }
-            let x =this.player[0].pos.x ;
-            let y =this.player[0].pos.y ;
-
-            this.enemy[i].update(3,x,y);
+            this.enemy[i].update();
             this.enemy[i].show();
         }
     }
@@ -72,27 +62,23 @@ class Game{
             this.wall[i].show()
         }
     }
-    checkPlayer(){
-        for (let i = this.player.length - 1; i >= 0; i--) {
-                
+    checkPlayer(){ 
             for (let j = this.food.length-1; j >= 0; j--) {
-                if (this.player[i].eat(this.food[j])){
+                if (this.player.eat(this.food[j])){
                     this.food.splice(j,1);
                 }
             }
             for (let j = this.enemy.length-1; j >= 0; j--) {
-                if(this.player[i].eat(this.enemy[j])){
+                if(this.player.eat(this.enemy[j])){
                     this.enemy.splice(j,1);
                 }
             } 
-            for (let j = this.player.length-1; j >= 0; j--) {
-                if(this.player[i].eat(this.player[j]) && i!=j){
+            for (let j = this.player.sons-1; j >= 0; j--) {
+                if(this.player.eat(this.player.sons[j])){
                     this.player.splice(j,1);
                 }
             }        
-        }
-    }
-        
+    }        
     checkEnemy(){
         for (let i = this.enemy.length - 1; i >= 0; i--) {
         
@@ -100,44 +86,49 @@ class Game{
                 if (this.enemy[i].eat(this.food[j])){
                     this.food.splice(j,1);
                 }
-            } 
-            //Aqui salta un error de vez en cuando
-            for (let j = this.player.length-1; j >= 0; j--) {
-                if(this.enemy[i].eat(this.player[j])){
-                    this.player.splice(j,1);
-                    console.log('Perdiste Rata por enemy');
+            }
+
+            for (let j = this.player.sons-1; j >= 0; j--) {
+                if(this.enemy[i].eat(this.player.sons[j])){
+                    this.player.sons.splice(j,1);
                 }
-            }        
+            }
+
             for (let j = this.enemy.length-1; j >= 0; j--) {
                 if(this.enemy[i]===undefined){return;}
                 if (this.enemy[i].eat(this.enemy[j]) && i!=j){
                     this.enemy.splice(j,1);
                 }
-                //Esto se puso para que no saltara un error que pasaba de vez en cuando no se porque GH
             }
+
+            if(this.enemy[i].eat(this.player) && this.player.sons.length !== 0){
+                //this.player = this.player.sons[0];
+            }
+
+            if(this.enemy[i].eat(this.player) && this.player.sons.length ===0){
+                this.gameOver = true;
+            }
+
         }
 
     }
+    
     checkWall(){
         for (let i = this.wall.length - 1; i >= 0; i--) {
-        
-            for (let j = this.food.length-1; j >= 0; j--) {
-                if (this.wall[i].eat(this.food[j])){
-                    this.food.splice(j,1);
-                }
-            } 
-            //Aqui salta un error de vez en cuando
-            for (let j = this.player.length-1; j >= 0; j--) {
-                if(this.wall[i].eat(this.player[j])){
-                    this.player.splice(j,1);
-                    console.log('Te comiste a ti mismo');
-                }
-            }        
+
+            if(this.wall[i].eat(this.player)&&this.player.sons.length === 0){
+                console.log('Wall comio Player principal')
+                this.gameOver = true;
+            }
+            else if(this.wall[i].eat(this.player)&&this.player.sons.length !== 0){
+                console.log('Adios main player')
+                this.player = this.player.sons[0];    
+            }
+                    
             for (let j = this.enemy.length-1; j >= 0; j--) {               
-                if (this.wall[i].eat(this.enemy[j]) && i!=j){
+                if (this.wall[i].eat(this.enemy[j])){
                     this.enemy.splice(j,1);
                 }
-                //Esto se puso para que no saltara un error que pasaba de vez en cuando no se porque GH
             }
         }
     }

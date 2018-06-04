@@ -3,8 +3,8 @@ class Configuration {
         this.player = player;
         this.zoom = 1;
     }
-    setBackground(n){
-        background(n);
+    setBackground(){
+        background(105);
     }
     setScreen(x,y){
         translate(x,y); 

@@ -18,16 +18,18 @@ class Circle{
         this.vel.lerp(acc,0.05);
         this.pos.add(this.vel);
     }
+    showText(){
+        let mass =floor(this.r * this.r * PI );
+        textSize(10*(this.r*0.08));
+        textAlign(CENTER);
+        text(mass,this.pos.x,this.pos.y);
+    }
     show(){
         noStroke();
         fill(this.color);
         ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
         fill(this.textColor);
-        
-        let mass =floor(this.r * this.r * PI );
-        textSize(10*(this.r*0.08));
-        textAlign(CENTER);
-        text(mass,this.pos.x,this.pos.y);
+        this.showText();
     }
     eat(other){      
         let distance = p5.Vector.dist(this.pos,other.pos);

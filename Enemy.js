@@ -16,8 +16,13 @@ class Enemy extends Circle {
         this.acc.setMag(0.3);
         this.vel.add(this.acc);
         this.pos.add(this.vel);
-        this.acc.mult(0);
-    
+       // this.acc.mult(0);
+    }
+    show(){
+        strokeWeight(0.5);
+        stroke(0);
+        fill(255,255,20,100);
+        ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
     }
     eat(other){
         if (other === undefined){return} 
