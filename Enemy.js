@@ -2,21 +2,30 @@ class Enemy extends Circle {
     constructor(x,y,r){
         super(x,y,r);
         this.color = "blue";
-        this.type = "enemy"
-        this.acc = createVector(0,0);
-        this.chance = random(1);
+        this.type = "enemy";
+        this.direction = createVector(1,0);
+        this.anguloRotacion = random(0,2*PI);
     }
     applyForce(force){
         this.acc.add(force);
     }
     update(n){
-        let randomAcc = p5.Vector.random2D();
-        this.applyForce(randomAcc);
-        //let calcularFuerzaMag = sqrt((this.acc.x*this.acc.x)+(this.acc.y*this.acc.y))
-        this.acc.setMag(0.3);
+        // let randomAcc = p5.Vector.random2D();
+        let cambiarAngulo = random(10);
+        if(cambiarAngulo>=7){this.anguloRotacion = random(0,2*PI);}
+        this.direction.rotate(this.anguloRotacion);
+        this.applyForce(this.direction);
+        // this.applyForce(randomAcc);
+        this.acc.setMag(0.5);        
+        
+        //Halla el vector unitario (1) y lo multiplica *0.25
         this.vel.add(this.acc);
+        
+        //Restringe las posiciones del enemigo
+        this.pos.x = constrain(this.pos.x ,-windowWidth*3,windowWidth*3)
+        this.pos.y = constrain(this.pos.y ,-windowHeight*3,windowHeight*3)
+
         this.pos.add(this.vel);
-       // this.acc.mult(0);
     }
     show(){
         strokeWeight(0.5);

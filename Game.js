@@ -3,17 +3,20 @@ class Game{
         this.food = [];
         this.enemy = [];
         this.wall = [];
-        this.player = undefined;
+        this.player = [];
         this.gameOver = false;
     }
-    createPlayer(x,y,r){
-        this.player = new Player(x,y,r);
-        return this.player;
+    createPlayer(n){
+        for(let i = 0 ; i < n ; i++){
+            this.player[i] = new Player(0,0,20);
+        }
     }
     showPlayer(){
-            this.player.update(5);
-            this.player.show(); 
-    }  
+        for(let i = 0 ; i < this.player.length ; i++){
+            this.player[i].update();
+            this.player[i].show(); 
+        } 
+    } 
     createFood(n){
         for (let i = 0; i < n; i++) {
             let x = random(-windowWidth*3,windowHeight*3);
@@ -24,6 +27,7 @@ class Game{
     updateFood(n){
         if (this.food.length <= 500){
             for (let i = 0; i < n; i++) {
+                //Crear un if para que las comidas no choquen a la hora de crearse
                 let x = random(-windowWidth*3,windowHeight*3);
                 let y = random(-windowWidth*3,windowHeight*3);
                 let newFood = new Food(x,y,10);
@@ -39,9 +43,19 @@ class Game{
     
     createEnemy(n){
         for (let i = 0; i < n; i++) {
-            let x = random(-windowWidth*3,windowHeight*3);
-            let y = random(-windowWidth*3,windowHeight*3);
-            this.enemy[i] = new Enemy(x,y,random(13,40));
+            let x = random(-windowWidth*3,windowWidth*3);
+            let y = random(-windowHeight*3,windowHeight*3);
+            this.enemy[i] = new Enemy(x,y,random(15,40));
+        }
+    }
+    updateEnemy(n){
+        if (this.enemy.length <= 30){
+            for (let i = 0; i < n; i++) {
+                let x = random(-windowWidth*3,windowHeight*3);
+                let y = random(-windowWidth*3,windowHeight*3);
+                let newEnemy = new Enemy(x,y,random(15,40));
+                this.enemy.push(newEnemy);
+            }
         }
     }
     showEnemy(){
@@ -52,32 +66,36 @@ class Game{
     }
     createWall(n){
         for (let i = 0; i < n; i++) {
-            let x = random(-windowWidth*3,windowHeight*3);
-            let y = random(-windowWidth*3,windowHeight*3);
+            let x = random(-windowWidth*3,windowWidth*3);
+            let y = random(-windowHeight*3,windowHeight*3);
             this.wall[i] = new Wall(x,y,random(20,30));
         }
     }
     showWall(){
         for (let i = 0; i < this.wall.length; i++) {
-            this.wall[i].show()
+            this.wall[i].show();
         }
     }
     checkPlayer(){ 
-            for (let j = this.food.length-1; j >= 0; j--) {
-                if (this.player.eat(this.food[j])){
-                    this.food.splice(j,1);
+            for (let i = this.player.length - 1; i >= 0; i--) {
+                
+                for (let j = this.food.length-1; j >= 0; j--){
+                    if (this.player[i].eat(this.food[j])){
+                        this.food.splice(j,1);
+                    }
                 }
+                for (let j = this.enemy.length-1; j >= 0; j--){
+                    if(this.player[i].eat(this.enemy[j])){
+                        this.enemy.splice(j,1);
+                    }
+                } 
+                for (let j = this.player.sons-1; j >= 0; j--){
+                    if(this.player[i].eat(this.player[j])){
+                        this.player.splice(j,1);
+                    }
+                }
+                
             }
-            for (let j = this.enemy.length-1; j >= 0; j--) {
-                if(this.player.eat(this.enemy[j])){
-                    this.enemy.splice(j,1);
-                }
-            } 
-            for (let j = this.player.sons-1; j >= 0; j--) {
-                if(this.player.eat(this.player.sons[j])){
-                    this.player.splice(j,1);
-                }
-            }        
     }        
     checkEnemy(){
         for (let i = this.enemy.length - 1; i >= 0; i--) {
@@ -88,9 +106,13 @@ class Game{
                 }
             }
 
-            for (let j = this.player.sons-1; j >= 0; j--) {
-                if(this.enemy[i].eat(this.player.sons[j])){
-                    this.player.sons.splice(j,1);
+            for (let j = this.player.length; j >= 0; j--) {
+                if(this.enemy[i].eat(this.player[j])){
+                    this.player.splice(j,1);
+                    if (this.player.length === 0){
+                        this.gameOver = true;
+                        return;
+                    }
                 }
             }
 
@@ -100,15 +122,6 @@ class Game{
                     this.enemy.splice(j,1);
                 }
             }
-
-            if(this.enemy[i].eat(this.player) && this.player.sons.length !== 0){
-                //this.player = this.player.sons[0];
-            }
-
-            if(this.enemy[i].eat(this.player) && this.player.sons.length ===0){
-                this.gameOver = true;
-            }
-
         }
 
     }
@@ -116,16 +129,16 @@ class Game{
     checkWall(){
         for (let i = this.wall.length - 1; i >= 0; i--) {
 
-            if(this.wall[i].eat(this.player)&&this.player.sons.length === 0){
-                console.log('Wall comio Player principal')
-                this.gameOver = true;
-            }
-            else if(this.wall[i].eat(this.player)&&this.player.sons.length !== 0){
-                console.log('Adios main player')
-                this.player = this.player.sons[0];    
-            }
-                    
-            for (let j = this.enemy.length-1; j >= 0; j--) {               
+            for (let j = this.player.length - 1; j >= 0 ; j--) {
+                if(this.wall[i].eat(this.player[j])){
+                    this.player.splice(j,1);
+                    if(this.player.length === 0){
+                        console.log('No hay more players , Perdiste');
+                        this.gameOver = true;
+                    }    
+                }
+            }                    
+            for (let j = this.enemy.length-1; j >= 0; j--) {
                 if (this.wall[i].eat(this.enemy[j])){
                     this.enemy.splice(j,1);
                 }

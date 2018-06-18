@@ -10,7 +10,7 @@ class Configuration {
         translate(x,y); 
     }
     scl(n){
-        let newzoom = n/this.player.r;	
+        let newzoom = n/game.player[0].r;	
         this.zoom = lerp(this.zoom,newzoom,0.1);
         scale(this.zoom);
     }

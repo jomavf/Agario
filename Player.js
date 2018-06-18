@@ -2,20 +2,11 @@ class Player extends Circle{
     constructor(x,y,r){
         super(x,y,r);
         this.type = "player";
-        this.color = "white"
         this.minRangeMouse =200;
-        this.textColor = "black"
-        this.acc = createVector(0,0);
-        this.sons = [];
     }
-    applyForce(force){
-        this.acc.add(force);
-    }
-    update(n=3){   
-        let newvel = createVector(mouseX-width/2,mouseY-height/2);
-        //if(!this.lider){newvel = createVector(mouseX-width/2,mouseY-height/2);}     
-        let mag = n;
-        
+    update(){   
+        let  newvel = createVector(mouseX-width/2,mouseY-height/2);
+        let mag = 3;
         if (newvel.mag() < (1.5*this.r)){
             mag = mag - 0.75*mag;
         }
@@ -33,9 +24,9 @@ class Player extends Circle{
         text(mass,this.pos.x,this.pos.y);
     }
     show(){
-        if(this.gameover){
-            return;
-        }
+        // if(this.gameover){
+        //     return;
+        // }
         
         stroke(0,0,255);
         //fill(this.color);
