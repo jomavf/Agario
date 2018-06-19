@@ -2,18 +2,20 @@ var game;
 var confi;
 var player;
 var grid;
+
 function setup() {
 	createCanvas(windowWidth,windowHeight);
-
 	game = new Game();	
 	confi = new Configuration();
 	grid = new Grid(50,50);	
 
+	//Vida infinita
+	game.setInfinityMode(true);
 	//Se crea entidades
 	game.createPlayer(1);
-	//game.createFood(1000);	
+	game.createFood(1000);	
 	game.createEnemy(200);	
-	game.createWall(80);	
+	//game.createWall(80);	
 }
 
 function draw() {
@@ -23,17 +25,18 @@ function draw() {
 		console.log('Perdiste');
 		noLoop();
 	}
-
 	//Configuracion
-	confi.setBackground();
+
+	//confi.setBackground();
+	background(255);	
 	confi.setScreen(width/2,height/2);
 	confi.scl(64);
 	confi.setScreen(-game.player[0].pos.x,-game.player[0].pos.y);
 
 	//Muestra las entidades
-	//game.updateFood(500);
+	game.updateFood(500);
 	game.updateEnemy(30);
-	// game.showFood();
+	game.showFood();
 	game.showEnemy();
 	game.showPlayer();
 	game.showWall();
@@ -42,7 +45,7 @@ function draw() {
 	game.checkWall();
 	game.checkPlayer();
 	game.checkEnemy();
-	
+	game.infinyLife();
 
 	
 }

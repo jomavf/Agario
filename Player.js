@@ -13,6 +13,11 @@ class Player extends Circle{
         if(newvel.mag() < this.r/4){
             mag = 0;
         }
+        
+        //Restringe las posiciones del enemigo
+        this.pos.x = constrain(this.pos.x ,-windowWidth*3,windowWidth*3)
+        this.pos.y = constrain(this.pos.y ,-windowHeight*3,windowHeight*3)
+
         newvel.setMag(mag);
         this.vel.lerp(newvel,0.05);
         this.pos.add(this.vel);

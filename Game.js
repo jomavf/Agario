@@ -5,7 +5,26 @@ class Game{
         this.wall = [];
         this.player = [];
         this.gameOver = false;
+        this.infinyMode = false;
     }
+    setInfinityMode(value){
+        if (value === true || value === false){
+            this.infinyMode = value;
+        }
+        else{
+            console.log('Ingresa un valor de value valido');
+            this.infinyMode=false;
+            this.gameOver = true;
+        }
+    }
+    infinyLife(player){
+            if(this.player.length === 0){
+                let x = random(-windowWidth*3,windowWidth*3);
+                let y = random(-windowHeight*3,windowHeight*3);
+                let newPlayer = new Player(x,y,20);
+                this.player.push(newPlayer);
+            }
+        }
     createPlayer(n){
         for(let i = 0 ; i < n ; i++){
             this.player[i] = new Player(0,0,20);
@@ -19,8 +38,8 @@ class Game{
     } 
     createFood(n){
         for (let i = 0; i < n; i++) {
-            let x = random(-windowWidth*3,windowHeight*3);
-            let y = random(-windowWidth*3,windowHeight*3);
+            let x = random(-windowWidth*3,windowWidth*3);
+            let y = random(-windowHeight*3,windowHeight*3);
             this.food[i] = new Food(x,y,10);
         }
     }
@@ -28,8 +47,8 @@ class Game{
         if (this.food.length <= 500){
             for (let i = 0; i < n; i++) {
                 //Crear un if para que las comidas no choquen a la hora de crearse
-                let x = random(-windowWidth*3,windowHeight*3);
-                let y = random(-windowWidth*3,windowHeight*3);
+                let x = random(-windowWidth*3,windowWidth*3);
+                let y = random(-windowHeight*3,windowHeight*3);
                 let newFood = new Food(x,y,10);
                 this.food.push(newFood);
             }
@@ -109,7 +128,7 @@ class Game{
             for (let j = this.player.length; j >= 0; j--) {
                 if(this.enemy[i].eat(this.player[j])){
                     this.player.splice(j,1);
-                    if (this.player.length === 0){
+                    if (this.player.length === 0 && this.infinyMode ===false){
                         this.gameOver = true;
                         return;
                     }
@@ -132,7 +151,7 @@ class Game{
             for (let j = this.player.length - 1; j >= 0 ; j--) {
                 if(this.wall[i].eat(this.player[j])){
                     this.player.splice(j,1);
-                    if(this.player.length === 0){
+                    if(this.player.length === 0 && this.infinyMode === false){
                         console.log('No hay more players , Perdiste');
                         this.gameOver = true;
                     }    

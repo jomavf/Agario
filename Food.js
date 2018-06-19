@@ -1,7 +1,7 @@
 class Food extends Circle {
     constructor(x,y,r){
         super(x,y,r);
-        this.color = "red";
+        this.color = "orange";
         this.type = "food"
     }
     show(){
