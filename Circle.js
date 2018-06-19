@@ -11,6 +11,8 @@ class Circle{
         //Design Properties
         this.color = "white";
         this.textColor = 'black';
+        this.name = name || 'RataKevin';
+        
     }
     applyFroce(force){
         this.acc.add(force);

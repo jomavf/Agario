@@ -2,44 +2,35 @@ class Player extends Circle{
     constructor(x,y,r){
         super(x,y,r);
         this.type = "player";
-        this.minRangeMouse =200;
+        this.minRangeMouse =200;     
     }
     update(){   
         let  newvel = createVector(mouseX-width/2,mouseY-height/2);
-        let mag = 3;
-        if (newvel.mag() < (1.5*this.r)){
-            mag = mag - 0.75*mag;
-        }
-        if(newvel.mag() < this.r/4){
-            mag = 0;
-        }
-        
-        //Restringe las posiciones del enemigo
+        let mag = 10;
+
         this.pos.x = constrain(this.pos.x ,-windowWidth*3,windowWidth*3)
         this.pos.y = constrain(this.pos.y ,-windowHeight*3,windowHeight*3)
-
-        newvel.setMag(mag);
+        
+        newvel.setMag(mag/(this.r*0.06));
+        
         this.vel.lerp(newvel,0.05);
-        this.pos.add(this.vel);
+        this.pos.add(this.vel);  
     }
     showText(){
-        textSize(10*(this.r*0.08));
+        let area = floor(this.r * this.r * PI);
+
         textAlign(CENTER); 
-        let mass =floor(this.r * this.r * PI );
-        text(mass,this.pos.x,this.pos.y);
+        textSize(5*(this.r*0.08));
+        text(this.name,this.pos.x,this.pos.y);
+        text(area,this.pos.x,this.pos.y + 10 * (this.r*0.05) ) ;
     }
     show(){
-        // if(this.gameover){
-        //     return;
-        // }
-        
-        stroke(0,0,255);
-        //fill(this.color);
+        stroke(0);
+        noFill();
         fill(0,0,255,100);
         ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
-        fill(this.textColor);
-        //this.showText();
 
+        this.showText();
     }
     eat(other){
         let distance = p5.Vector.dist(this.pos,other.pos);

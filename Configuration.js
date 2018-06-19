@@ -43,4 +43,5 @@ class Configuration {
         this.zoom = lerp(this.zoom,newzoom,0.1);
         scale(this.zoom);
     }
+
 }

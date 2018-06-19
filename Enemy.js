@@ -9,22 +9,22 @@ class Enemy extends Circle {
     applyForce(force){
         this.acc.add(force);
     }
-    update(n){
-        // let randomAcc = p5.Vector.random2D();
-        let cambiarAngulo = random(10);
-        if(cambiarAngulo>=7){this.anguloRotacion = random(0,2*PI);}
-        this.direction.rotate(this.anguloRotacion);
-        this.applyForce(this.direction);
-        // this.applyForce(randomAcc);
-        this.acc.setMag(0.5);        
+    update(){
+        let  newvel = createVector(0,0);        
+        let mag = 10;
         
-        //Halla el vector unitario (1) y lo multiplica *0.25
-        this.vel.add(this.acc);
-        
-        //Restringe las posiciones del enemigo
         this.pos.x = constrain(this.pos.x ,-windowWidth*3,windowWidth*3)
         this.pos.y = constrain(this.pos.y ,-windowHeight*3,windowHeight*3)
+        
+        if ( this.r >= game.player[0].r){
+            newvel = createVector(game.player[0].pos.x-this.pos.x,
+                game.player[0].pos.y-this.pos.y);
+        }else{
+            newvel = p5.Vector.random2D();
+        }
+        newvel.setMag(mag/(this.r*0.06));   
 
+        this.vel.lerp(newvel,0.05);
         this.pos.add(this.vel);
     }
     show(){

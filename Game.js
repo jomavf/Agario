@@ -19,15 +19,16 @@ class Game{
     }
     infinyLife(player){
             if(this.player.length === 0){
+                console.log('Perdiste');
                 let x = random(-windowWidth*3,windowWidth*3);
                 let y = random(-windowHeight*3,windowHeight*3);
-                let newPlayer = new Player(x,y,20);
+                let newPlayer = new Player(x,y,15);
                 this.player.push(newPlayer);
             }
         }
     createPlayer(n){
         for(let i = 0 ; i < n ; i++){
-            this.player[i] = new Player(0,0,20);
+            this.player[i] = new Player(0,0,15);
         }
     }
     showPlayer(){
@@ -40,7 +41,7 @@ class Game{
         for (let i = 0; i < n; i++) {
             let x = random(-windowWidth*3,windowWidth*3);
             let y = random(-windowHeight*3,windowHeight*3);
-            this.food[i] = new Food(x,y,10);
+            this.food[i] = new Food(x,y,5);
         }
     }
     updateFood(n){
@@ -49,7 +50,7 @@ class Game{
                 //Crear un if para que las comidas no choquen a la hora de crearse
                 let x = random(-windowWidth*3,windowWidth*3);
                 let y = random(-windowHeight*3,windowHeight*3);
-                let newFood = new Food(x,y,10);
+                let newFood = new Food(x,y,5);
                 this.food.push(newFood);
             }
         }
