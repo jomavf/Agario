@@ -4,6 +4,7 @@ var player;
 var grid;
 
 function setup() {
+	angleMode(DEGREES);
 	createCanvas(windowWidth,windowHeight);
 	game = new Game();	
 	confi = new Configuration();
@@ -15,7 +16,7 @@ function setup() {
 	game.createPlayer(1);
 	game.createFood(2000);	
 	game.createEnemy(200);	
-	//game.createWall(80);	
+	game.createWall(50);	
 }
 
 function draw() {
@@ -33,8 +34,8 @@ function draw() {
 	confi.setScreen(-game.player[0].pos.x,-game.player[0].pos.y);
 
 	//Muestra las entidades
-	game.updateFood(500);
-	game.updateEnemy(30);
+	game.updateFood(1000);
+	game.updateEnemy(50);
 	game.showFood();
 	game.showEnemy();
 	game.showPlayer();

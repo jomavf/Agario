@@ -6,6 +6,7 @@ class Game{
         this.player = [];
         this.gameOver = false;
         this.infinyMode = false;
+        this.createdEnemies = 0;
     }
     setInfinityMode(value){
         if (value === true || value === false){
@@ -62,18 +63,21 @@ class Game{
     }
     
     createEnemy(n){
+        this.createdEnemies += n;
         for (let i = 0; i < n; i++) {
             let x = random(-windowWidth*3,windowWidth*3);
             let y = random(-windowHeight*3,windowHeight*3);
-            this.enemy[i] = new Enemy(x,y,random(15,40));
+            this.enemy[i] = new Enemy(x,y,random(15,40),'Bot '+ i);
         }
     }
     updateEnemy(n){
         if (this.enemy.length <= 30){
+            this.createdEnemies += n;
             for (let i = 0; i < n; i++) {
+                let name = this.createdEnemies + i
                 let x = random(-windowWidth*3,windowHeight*3);
                 let y = random(-windowWidth*3,windowHeight*3);
-                let newEnemy = new Enemy(x,y,random(15,40));
+                let newEnemy = new Enemy(x,y,random(15,40),'Bot '+name);
                 this.enemy.push(newEnemy);
             }
         }

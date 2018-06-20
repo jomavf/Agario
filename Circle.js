@@ -1,5 +1,5 @@
 class Circle{
-    constructor(x,y,r){
+    constructor(x,y,r,name){
         //Pricipal properties
         this.pos = createVector(x,y);
         
@@ -9,8 +9,12 @@ class Circle{
         this.area = rect(this.pos.x-this.r/2,this.pos.y-this.r/2,this.r*2,this.r*2)
 
         //Design Properties
-        this.color = "white";
-        this.textColor = 'black';
+        //Design color
+        this.c_r = random(255);
+        this.c_g = random(255);
+        this.c_b = random(255);
+        this.c_alfa = 100;
+
         this.name = name || 'RataKevin';
         
     }
@@ -28,16 +32,29 @@ class Circle{
         
     }
     showText(){
-        let area =floor(this.r * this.r * PI );
-        textSize(10*(this.r*0.08));
-        textAlign(CENTER);
-        text(area,this.pos.x,this.pos.y);
+        let area = floor(this.r * this.r * PI);
+        
+        textFont('Helvetica');
+        stroke(0);
+        fill(255);
+        textAlign(CENTER); 
+        textSize(5*(this.r*0.08));
+        text(this.name,this.pos.x,this.pos.y);
+        text(area,this.pos.x,this.pos.y + 10 * (this.r*0.05) ) ;
     }
     show(){
-        noStroke();
-        fill(this.color);
-        ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
-        fill(this.textColor);
+        stroke(0);
+        fill(this.c_r,this.c_g,this.c_b,this.c_alfa);
+
+        beginShape();  
+        let edge = 30;
+        for (let i = 0; i < 360; i+=edge) {
+            let x = sin(i) * this.r;
+            let y = cos(i) * this.r;
+            vertex(x + this.pos.x,y + this.pos.y);
+        }
+        endShape(CLOSE);
+
         this.showText();
     }
     eat(other){      

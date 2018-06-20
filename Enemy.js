@@ -1,7 +1,6 @@
 class Enemy extends Circle {
-    constructor(x,y,r){
-        super(x,y,r);
-        this.color = "blue";
+    constructor(x,y,r,name){
+        super(x,y,r,name);
         this.type = "enemy";
         this.direction = createVector(1,0);
         this.anguloRotacion = random(0,2*PI);
@@ -11,7 +10,7 @@ class Enemy extends Circle {
     }
     update(){
         let  newvel = createVector(0,0);        
-        let mag = 10;
+        let mag = 5;
         
         this.pos.x = constrain(this.pos.x ,-windowWidth*3,windowWidth*3)
         this.pos.y = constrain(this.pos.y ,-windowHeight*3,windowHeight*3)
@@ -22,16 +21,30 @@ class Enemy extends Circle {
         }else{
             newvel = p5.Vector.random2D();
         }
-        newvel.setMag(mag/(this.r*0.06));   
+        newvel.setMag(mag/(this.r*0.1));   
 
         this.vel.lerp(newvel,0.05);
         this.pos.add(this.vel);
     }
     show(){
-        strokeWeight(0.5);
-        stroke(0);
-        fill(255,255,20,100);
-        ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
+
+        
+
+        strokeWeight(2.5);
+        stroke(this.c_r,this.c_g,this.c_b);
+        fill(this.c_r,this.c_g,this.c_b,this.c_alfa);
+        fill(this.c_r,this.c_g+50,this.c_b+50);
+
+        beginShape();  
+        let edge = random(10,25);        
+        for (let i = 0; i < 360; i+=edge) {
+            let x = sin(i) * this.r;
+            let y = cos(i) * this.r;
+            vertex(x + this.pos.x,y + this.pos.y);
+        }
+        endShape(CLOSE);
+
+        this.showText();
     }
     eat(other){
         if (other === undefined){return} 

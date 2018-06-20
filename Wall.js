@@ -1,12 +1,23 @@
 class Wall extends Circle{
     constructor(x,y,r){
         super(x,y,r);
+        
+    
     }
     show(){
-        strokeWeight(2);
+        strokeWeight(2.5);
         stroke(255,0,0);
-        fill(255,0,0);
-        ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
+        fill(255,80,80);
+
+        beginShape();  
+        let edge = random(20,40);        
+        for (let i = 0; i < 360; i+=edge) {
+            let x = sin(i) * this.r;
+            let y = cos(i) * this.r;
+            vertex(x + this.pos.x,y + this.pos.y);
+        }
+        endShape(CLOSE);
+
     }
     eat(other){
         if (other === undefined){return;}

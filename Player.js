@@ -2,22 +2,26 @@ class Player extends Circle{
     constructor(x,y,r){
         super(x,y,r);
         this.type = "player";
-        this.minRangeMouse =200;     
+        this.minRangeMouse =200;    
+         
     }
     update(){   
         let  newvel = createVector(mouseX-width/2,mouseY-height/2);
-        let mag = 10;
+        let mag = 5;
 
         this.pos.x = constrain(this.pos.x ,-windowWidth*3,windowWidth*3)
         this.pos.y = constrain(this.pos.y ,-windowHeight*3,windowHeight*3)
-        
+    
         newvel.setMag(mag/(this.r*0.06));
-        
-        this.vel.lerp(newvel,0.05);
+
+        this.vel.lerp(newvel,0.1);
         this.pos.add(this.vel);  
     }
     showText(){
         let area = floor(this.r * this.r * PI);
+
+        stroke(0);
+        fill(255);
 
         textAlign(CENTER); 
         textSize(5*(this.r*0.08));
@@ -25,10 +29,22 @@ class Player extends Circle{
         text(area,this.pos.x,this.pos.y + 10 * (this.r*0.05) ) ;
     }
     show(){
+        strokeWeight(0.5);
         stroke(0);
-        noFill();
         fill(0,0,255,100);
-        ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
+
+
+        beginShape();  
+        let edge = random(15,25);
+        for (let i = 0; i < 360; i+=edge) {
+            let x = sin(i) * this.r;
+            let y = cos(i) * this.r;
+            vertex(x + this.pos.x,y + this.pos.y);
+        }
+        endShape(CLOSE);
+
+
+        //  ellipse(this.pos.x,this.pos.y, this.r*2,this.r*2);
 
         this.showText();
     }
