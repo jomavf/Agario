@@ -41,7 +41,7 @@ class Grid {
 
         translate(-windowWidth*3,-windowHeight*3);
         stroke(121,128,129);
-        fill(255);
+        noFill();
         for (let i = 0; i < this.rectangulos.length; i++) {
             this.rectangulos[i].show();
         }

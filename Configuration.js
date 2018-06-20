@@ -60,8 +60,10 @@ class Configuration {
     setScore(){
         push();
         noStroke();
+        translate(0,0);
         fill(0,50)
-        rect(windowWidth-175,windowHeight-750,170,250);
+        rect(windowWidth-175,10,170,250);
+        
         stroke(0);
         fill(255);
         textAlign(LEFT,TOP);

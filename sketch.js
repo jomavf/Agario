@@ -28,14 +28,14 @@ function draw() {
 		noLoop();
 	}
 	//Configuracion
-	background(150);
+	background(255);
 	confi.setScore();	
-
+	
 	confi.setScreen(width/2,height/2);
 	confi.scl(64);
 	confi.setScreen(-game.player[0].pos.x,-game.player[0].pos.y);
 	grid.show();
-
+	
 	//Muestra las entidades
 	game.updateFood(1000);
 	game.updateEnemy(50);
