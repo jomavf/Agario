@@ -5,30 +5,47 @@ class Rectangle{
         this.w = w;
         this.h = h;
     }
+    show(){
+        rect(this.x,this.y,this.w,this.h);
+    }
 }
 
 class Grid {
-    constructor(cols,rows){
-        this.width = windowWidth;
-        this.height = windowHeight;
-        this.x = -windowWidth;
-        this.y = -windowHeight;
-        this.w = this.width / cols;
-        this.h = this.height / rows;
+    constructor(cols = 5,rows = 5){
+        this.width = windowWidth*6;
+        this.height = windowHeight*6;
+        this.x = -windowWidth*3;
+        this.y = -windowHeight*3;
         this.cols = cols;
         this.rows = rows;
-        this.rectan = []
+        this.w = this.width / this.cols;
+        this.h = this.height / this.rows;
+        this.rectangulos = []
     }
     init(){
+        push();
+        translate(-windowWidth*3,-windowHeight*3);
+        for (let i = 0; i < this.w;i++) {
+            for (let j = 0; j < this.h;j++) {
+                let x = i * this.cols;
+                let y = j * this.rows;
 
-    }
-    show(){
-        stroke('green');
-        noFill();
-        for (let i = this.x; i < this.w;i++) {
-            for (let j = this.y; j < this.h;j++) {
-         //rect(i*this.w,j*this.h,this.w,this.h)
+                let nodo = new Rectangle(x,y,this.cols,this.rows);  
+                this.rectangulos.push(nodo);
             }
         }
+        pop();
+    }
+    show(){
+        push();
+
+        translate(-windowWidth*3,-windowHeight*3);
+        stroke(121,128,129);
+        fill(255);
+        for (let i = 0; i < this.rectangulos.length; i++) {
+            this.rectangulos[i].show();
+        }
+        // rect (-windowWidth*3,-windowHeight*3,windowWidth*6,windowHeight*6)
+        pop();
     }
 }
