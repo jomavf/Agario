@@ -6,7 +6,7 @@ class Circle{
         this.r = r;
         this.vel = createVector(0,0);
         this.acc = createVector(0,0);
-        this.area = rect(this.pos.x-this.r/2,this.pos.y-this.r/2,this.r*2,this.r*2)
+        this.score = 0;
 
         //Design Properties
         //Design color
@@ -33,6 +33,7 @@ class Circle{
     }
     showText(){
         let area = floor(this.r * this.r * PI);
+        this.score = area;
         
         textFont('Helvetica');
         stroke(0);

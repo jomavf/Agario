@@ -16,7 +16,7 @@ function setup() {
 	game.createPlayer(1);
 	game.createFood(2000);	
 	game.createEnemy(200);	
-	game.createWall(50);	
+	game.createWall(100);	
 }
 
 function draw() {
@@ -29,6 +29,7 @@ function draw() {
 	//Configuracion
 	//confi.setBackground();
 	background(255);
+	confi.setScore();	
 	confi.setScreen(width/2,height/2);
 	confi.scl(64);
 	confi.setScreen(-game.player[0].pos.x,-game.player[0].pos.y);

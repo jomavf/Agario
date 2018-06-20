@@ -3,7 +3,7 @@ class Player extends Circle{
         super(x,y,r);
         this.type = "player";
         this.minRangeMouse =200;    
-         
+        this.score = 0; 
     }
     update(){   
         let  newvel = createVector(mouseX-width/2,mouseY-height/2);
@@ -19,6 +19,7 @@ class Player extends Circle{
     }
     showText(){
         let area = floor(this.r * this.r * PI);
+        this.score = area;
 
         stroke(0);
         fill(255);

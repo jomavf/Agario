@@ -4,6 +4,7 @@ class Enemy extends Circle {
         this.type = "enemy";
         this.direction = createVector(1,0);
         this.anguloRotacion = random(0,2*PI);
+
     }
     applyForce(force){
         this.acc.add(force);
