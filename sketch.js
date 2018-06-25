@@ -2,22 +2,31 @@ var game;
 var confi;
 var player;
 var grid;
+var algoritmo;
+//Hay que cambiar la pantalla a un valor mas standar sino dara problemas
+var my_windowWidth = 1250;
+var my_windowHeight = 750;
+
 
 function setup() {
 	angleMode(DEGREES);
-	createCanvas(windowWidth,windowHeight);
+	createCanvas(my_windowWidth,my_windowHeight);
 	game = new Game();	
 	confi = new Configuration();
 	grid = new Grid(50,50);	
-
+	
 	//Vida infinita
 	game.setInfinityMode(true);
 	//Se crea entidades
 	game.createPlayer(1);
-	game.createFood(2000);	
-	game.createEnemy(200);	
-	//game.createWall(100);
+	game.createFood(500);	
+	game.createEnemy(100);
+	
+	game.createWall(300);
 	grid.init();
+
+	algoritmo = new Astar(grid.grid[0][0],grid.grid[grid.cols-1][grid.rows-1]);
+
 }
 
 function draw() {
@@ -28,13 +37,17 @@ function draw() {
 		noLoop();
 	}
 	//Configuracion
+	
 	background(255);
 	confi.setScore();	
 	
 	confi.setScreen(width/2,height/2);
+	
 	confi.scl(64);
 	confi.setScreen(-game.player[0].pos.x,-game.player[0].pos.y);
 	grid.show();
+	
+	
 	
 	//Muestra las entidades
 	game.updateFood(1000);
@@ -44,12 +57,16 @@ function draw() {
 	game.showPlayer();
 	game.showWall();
 	
+	// console.log(game.player[0].pos.x,game.player[0].pos.y)
+
+
 	//Verifica colisiones
-	game.checkWall();
+	//game.checkWall();
 	game.checkPlayer();
 	game.checkEnemy();
 	game.infinyLife();
 	
+	algoritmo.run();
 }
 
 function keyPressed(){
@@ -63,7 +80,7 @@ function mousePressed(){
 }
 
 //Responsive Screen
-function windowResized() {
-	resizeCanvas(windowWidth, windowHeight);
-}
+// function windowResized() {
+// 	resizeCanvas(width, height);
+// }
 

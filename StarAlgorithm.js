@@ -34,7 +34,7 @@ class Astar {
         let d = dist(current.x,current.y,end.x,end.y);
         return d;
     }
-    Run(){
+    run(){
         if (this.open.length>0){
             
             let lowestCost = this.FindLowestCost(this.open);
@@ -53,7 +53,7 @@ class Astar {
                     this.path.push(temp.previous); 
                     temp = temp.previous;
                 }             
-                noLoop();
+                //  noLoop();
             }
 
             current.neighbors.forEach(element => {
@@ -82,6 +82,7 @@ class Astar {
             console.log('No hay solucion');
             noLoop();
         }
+        
         for ( let i = 0 ; i < this.open.length;i++){
             this.open[i].red=0;
             this.open[i].green=255;

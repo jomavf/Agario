@@ -9,8 +9,8 @@ class Player extends Circle{
         let  newvel = createVector(mouseX-width/2,mouseY-height/2);
         let mag = 5;
 
-        this.pos.x = constrain(this.pos.x ,-windowWidth*3,windowWidth*3)
-        this.pos.y = constrain(this.pos.y ,-windowHeight*3,windowHeight*3)
+        this.pos.x = constrain(this.pos.x ,-width*3,width*3)
+        this.pos.y = constrain(this.pos.y ,-height*3,height*3)
     
         newvel.setMag(mag/(this.r*0.06));
 
@@ -42,6 +42,7 @@ class Player extends Circle{
             let y = cos(i) * this.r;
             vertex(x + this.pos.x,y + this.pos.y);
         }
+        this.drawArrow();
         endShape(CLOSE);
 
 
@@ -68,5 +69,5 @@ class Player extends Circle{
             let nPlayer = new Player((this.x+100),(this.y),(this.r/2));
             this.sons.push(nPlayer);
             this.r/=2;
-        }
     }
+}

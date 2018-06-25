@@ -2,7 +2,6 @@ class Circle{
     constructor(x,y,r,name){
         //Pricipal properties
         this.pos = createVector(x,y);
-        
         this.r = r;
         this.vel = createVector(0,0);
         this.acc = createVector(0,0);
@@ -70,5 +69,20 @@ class Circle{
         else{
             return false;
         }
+    }
+
+    drawArrow() {
+        push();
+        let base = createVector(this.pos.x,this.pos.y);
+        let mouse = createVector(mouseX,mouseY);
+        let wh = createVector(width/2,height/2);
+        let vec = p5.Vector.sub(mouse,wh);
+        stroke(this.c_r,this.c_g,this.c_b);
+        strokeWeight(3);
+        fill(0);
+        vec.setMag(this.r+20);
+        translate(this.pos.x,this.pos.y)
+        line(0,0, vec.x, vec.y);
+        pop();
     }
 }

@@ -11,41 +11,66 @@ class Rectangle{
 }
 
 class Grid {
-    constructor(cols = 5,rows = 5){
-        this.width = windowWidth*6;
-        this.height = windowHeight*6;
-        this.x = -windowWidth*3;
-        this.y = -windowHeight*3;
-        this.cols = cols;
-        this.rows = rows;
-        this.w = this.width / this.cols;
-        this.h = this.height / this.rows;
-        this.rectangulos = []
+    constructor(w=50 ,h =50){
+        this.w = w;
+        this.h = h;
+        this.width = width*6;
+        this.height = height*6;
+        this.x = -width*3;
+        this.y = -height*3;
+        this.cols = this.width/this.w;
+        this.rows = this.height/this.h;
+
+        this.grid = new Array(this.cols);
+        for (let i = 0; i < this.grid.length; i++) {
+            this.grid[i] = new Array(this.rows);
+        }
+
+        // this.rectangulos = [];
     }
     init(){
         push();
-        translate(-windowWidth*3,-windowHeight*3);
-        for (let i = 0; i < this.w;i++) {
-            for (let j = 0; j < this.h;j++) {
-                let x = i * this.cols;
-                let y = j * this.rows;
+        // translate(-width*3,-height*3);
+        translate(width/2,height/2);
+        //Aqui se anade un nodo mas por la razon de 155 < 155.4 rows (ckekear en console yo del futuro)
+        for (let i = 0; i < this.cols;i++) {
+            for (let j = 0; j < this.rows;j++) {
+                let x = (i * this.w);// -width*3;
+                let y = (j * this.h);// -height*3;
 
-                let nodo = new Rectangle(x,y,this.cols,this.rows);  
-                this.rectangulos.push(nodo);
+                // let nodo = new Rectangle(x,y,this.w,this.h);
+                
+                // console.log(`i=${i} j=${j}`)
+                this.grid[i][j] = new Node(x,y,this.w,this.h); 
+                // this.rectangulos.push(nodo);
             }
+        }
+        for (let i = 0; i < this.grid.length; i++) {
+            for (let j = 0; j < this.grid[0].length; j++) {
+                // console.log(`i=${i} j=${j}`)
+    
+                this.grid[i][j].addNeighbors(this.grid);
+            }
+            // this.rectangulos[i].show();
         }
         pop();
     }
+
     show(){
         push();
-
-        translate(-windowWidth*3,-windowHeight*3);
-        stroke(121,128,129);
-        noFill();
-        for (let i = 0; i < this.rectangulos.length; i++) {
-            this.rectangulos[i].show();
+        translate(-width*3,-height*3);
+        // stroke(121,128,129);
+        // noFill();
+        for (let i = 0; i < this.grid.length; i++) {
+            for (let j = 0; j < this.grid[0].length; j++) {
+                this.grid[i][j].show();
+            }
+            // this.rectangulos[i].show();
         }
-        // rect (-windowWidth*3,-windowHeight*3,windowWidth*6,windowHeight*6)
+        
+        // for (let i = 0; i < this.rectangulos.length; i++) {
+        //     this.rectangulos[i].addNeighbors();
+        // }
         pop();
     }
 }

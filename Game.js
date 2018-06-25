@@ -21,8 +21,8 @@ class Game{
     infinyLife(player){
             if(this.player.length === 0){
                 console.log('Perdiste');
-                let x = random(-windowWidth*3,windowWidth*3);
-                let y = random(-windowHeight*3,windowHeight*3);
+                let x = random(-width*3,width*3);
+                let y = random(-height*3,height*3);
                 let newPlayer = new Player(x,y,15);
                 this.player.push(newPlayer);
             }
@@ -40,20 +40,20 @@ class Game{
     } 
     createFood(n){
         for (let i = 0; i < n; i++) {
-            let x = random(-windowWidth*3,windowWidth*3);
-            let y = random(-windowHeight*3,windowHeight*3);
+            let x = random(-width*3,width*3);
+            let y = random(-height*3,height*3);
             this.food[i] = new Food(x,y,5);
         }
     }
     updateFood(n){
-        if (this.food.length <= 500){
-            for (let i = 0; i < n; i++) {
+        if (random(1) < 0.7){
+            // for (let i = 0; i < n; i++) {
                 //Crear un if para que las comidas no choquen a la hora de crearse
-                let x = random(-windowWidth*3,windowWidth*3);
-                let y = random(-windowHeight*3,windowHeight*3);
+                let x = random(-width*3,width*3);
+                let y = random(-height*3,height*3);
                 let newFood = new Food(x,y,5);
                 this.food.push(newFood);
-            }
+            // }
         }
     }
     showFood(){
@@ -65,8 +65,8 @@ class Game{
     createEnemy(n){
         this.createdEnemies += n;
         for (let i = 0; i < n; i++) {
-            let x = random(-windowWidth*3,windowWidth*3);
-            let y = random(-windowHeight*3,windowHeight*3);
+            let x = random(-width*3,width*3);
+            let y = random(-height*3,height*3);
             this.enemy[i] = new Enemy(x,y,random(15,40),'Bot '+ i);
         }
     }
@@ -75,8 +75,8 @@ class Game{
             this.createdEnemies += n;
             for (let i = 0; i < n; i++) {
                 let name = this.createdEnemies + i
-                let x = random(-windowWidth*3,windowHeight*3);
-                let y = random(-windowWidth*3,windowHeight*3);
+                let x = random(-width*3,height*3);
+                let y = random(-width*3,height*3);
                 let newEnemy = new Enemy(x,y,random(15,40),'Bot '+name);
                 this.enemy.push(newEnemy);
             }
@@ -90,9 +90,22 @@ class Game{
     }
     createWall(n){
         for (let i = 0; i < n; i++) {
-            let x = random(-windowWidth*3,windowWidth*3);
-            let y = random(-windowHeight*3,windowHeight*3);
+            push();
+            // translate(0,0)
+            // translate(-width*3,-height*3)
+            // translate(width/2,height/2);
+
+            // let x = random(width*6);
+            // let y = random(height*6);
+            let x = random(-width*3,width*3);
+            let y = random(-height*3,height*3);
+            // let x = -width*3 ;
+            // let y = -height*3 ;
             this.wall[i] = new Wall(x,y,random(20,30));
+            // let wx = this.wall[i].pos.x;
+            // let wy = this.wall[i].pos.y;
+            // console.log(`x=${wx} y=${wy}`)
+            pop();
         }
     }
     showWall(){
@@ -170,10 +183,11 @@ class Game{
         }
     }
     //----------------------Algoritmo--------------------------
+       
     InicializarNodos(){
 		for(var i = 0 ; i < cols ; i++){
 			for(var j = 0; j < rows ; j++){
-				this.grid[i][j] = new Node(i,j,cols,rows,width,height);
+                grid[i][j] = new Node(i,j,grid.w,grid.h,grid.width,grid.height);
 			}
 		}
 	}

@@ -31,8 +31,8 @@ class Configuration {
     setBackground(){
         
     // Background
-    this.setGradient(-windowWidth*3, -windowHeight*3, windowWidth*3, windowHeight*6, this.color1,this.color2, this.X_AXIS);
-    this.setGradient(0, -windowHeight*3, windowWidth*3, windowHeight*6, this.color2, this.color1, this.X_AXIS);
+    this.setGradient(-width*3, -height*3, width*3, height*6, this.color1,this.color2, this.X_AXIS);
+    this.setGradient(0, -height*3, width*3, height*6, this.color2, this.color1, this.X_AXIS);
             
     }
     setScreen(x,y){
@@ -44,6 +44,7 @@ class Configuration {
         scale(this.zoom);
     }
     sortArray(arr){
+        //Por arreglar y poner radio de mi player actual al iniciar
         let n = arr.length;
         let temp;    
         for (let i = 1; i < n; i++) {
@@ -62,7 +63,7 @@ class Configuration {
         noStroke();
         translate(0,0);
         fill(0,50)
-        rect(windowWidth-175,10,170,250);
+        rect(width-175,10,170,250);
         
         stroke(0);
         fill(255);
@@ -91,7 +92,7 @@ class Configuration {
 10. ${testArray[9].name}       ${testArray[9].score}`;
 
         textSize(15);
-        text(texto,windowWidth-170,windowHeight-740)
+        text(texto,width-170,height-740)
         pop();
     }
 

@@ -13,8 +13,8 @@ class Enemy extends Circle {
         let  newvel = createVector(0,0);        
         let mag = 5;
         
-        this.pos.x = constrain(this.pos.x ,-windowWidth*3,windowWidth*3)
-        this.pos.y = constrain(this.pos.y ,-windowHeight*3,windowHeight*3)
+        this.pos.x = constrain(this.pos.x ,-width*3,width*3)
+        this.pos.y = constrain(this.pos.y ,-height*3,height*3)
         
         if ( this.r >= game.player[0].r){
             newvel = createVector(game.player[0].pos.x-this.pos.x,
@@ -43,6 +43,7 @@ class Enemy extends Circle {
             let y = cos(i) * this.r;
             vertex(x + this.pos.x,y + this.pos.y);
         }
+        this.drawArrow();
         endShape(CLOSE);
 
         this.showText();
@@ -61,6 +62,26 @@ class Enemy extends Circle {
         else{
             return false;
         }
+    }
+    drawArrow() {
+        push();
+        let playerxy;
+        let xy;
+        if ( this.r >= game.player[0].r){
+            playerxy = createVector(game.player[0].pos.x,game.player[0].pos.y);
+            xy = createVector(this.pos.x,this.pos.y);
+        }else{
+            playerxy = p5.Vector.random2D();
+            xy = createVector(this.pos.x,this.pos.y);
+        }
+        let vec = p5.Vector.sub(playerxy,xy);
+        stroke(this.c_r,this.c_g,this.c_b);
+        strokeWeight(3);
+        fill(0);
+        vec.setMag(this.r+20);
+        translate(this.pos.x,this.pos.y)
+        line(0,0, vec.x, vec.y);
+        pop();
     }
 
 }
