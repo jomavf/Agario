@@ -100,7 +100,30 @@ class Node {
             //console.log(`Cuarto if => i = ${i}, j = ${j} col=${cols} row=${rows}`);            
             // this.neighbors.push(grid[i + cols][j-1 + rows]);
             this.neighbors.push(grid[i][j-1]);//Arriba
-		}
+        }
+        if (j>0 && i>0){
+            // if (j>this.y / this.ph){
+                // console.log(`Cuarto if => i = ${i}, j = ${j} col=${cols} row=${rows}`);            
+                this.neighbors.push(grid[i-1][j-1]);//Arriba izq
+        }
+        if (j>0 && i<cols-1){
+            // if (j>this.y / this.ph){
+                //console.log(`Cuarto if => i = ${i}, j = ${j} col=${cols} row=${rows}`);            
+                // this.neighbors.push(grid[i + cols][j-1 + rows]);
+                this.neighbors.push(grid[i+1][j-1]);//Arriba dere
+        }
+        if (i  >0 && j<rows-1){
+            // if (j>this.y / this.ph){
+                //console.log(`Cuarto if => i = ${i}, j = ${j} col=${cols} row=${rows}`);            
+                // this.neighbors.push(grid[i + cols][j-1 + rows]);
+                this.neighbors.push(grid[i-1][j+1]);//Abajo izq
+        }
+        if (j<rows-1 && i<cols-1){
+            // if (j>this.y / this.ph){
+                //console.log(`Cuarto if => i = ${i}, j = ${j} col=${cols} row=${rows}`);            
+                // this.neighbors.push(grid[i + cols][j-1 + rows]);
+                this.neighbors.push(grid[i+1][j+1]);//Abajo Der
+        }
 	}
 }
         
