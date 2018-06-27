@@ -17,10 +17,12 @@ class Enemy extends Circle {
         this.pos.y = constrain(this.pos.y ,-height*3,height*3)
         
         if ( this.r >= game.player[0].r){
-            newvel = createVector(game.player[0].pos.x-this.pos.x,
-                game.player[0].pos.y-this.pos.y);
+            // newvel = createVector(game.player[0].pos.x-this.pos.x,
+            //     game.player[0].pos.y-this.pos.y);
+            newvel = algoritmo.vector;
         }else{
-            newvel = p5.Vector.random2D();
+            // newvel = p5.Vector.random2D();
+            newvel = algoritmo.vector;
         }
         newvel.setMag(mag/(this.r*0.1));   
 
