@@ -135,10 +135,10 @@ class Astar {
             //         vertex(this.path[i].i * 50 , this.path[i].j * 50)
             //     }
             // endShape();
-            if(this.close.length>=2){
+            if(this.close.length>=4){
                 let x = game.enemy[0].pos.x;
                 let y = game.enemy[0].pos.y;
-                var vector_direccion = createVector(this.close[0].x - x,this.close[0].y - y);
+                var vector_direccion = createVector((this.close[3].x-width*3) - x,(this.close[3].y-height*3) - y);
                 this.vector = vector_direccion;
                 console.log(this.vector);
             }

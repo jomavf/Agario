@@ -76,7 +76,8 @@ class Enemy extends Circle {
             playerxy = p5.Vector.random2D();
             xy = createVector(this.pos.x,this.pos.y);
         }
-        let vec = p5.Vector.sub(playerxy,xy);
+        // let vec = p5.Vector.sub(playerxy,xy);
+        let vec = algoritmo.vector;
         stroke(this.c_r,this.c_g,this.c_b);
         strokeWeight(3);
         fill(0);
