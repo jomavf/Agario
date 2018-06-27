@@ -25,15 +25,23 @@ function setup() {
 	game.createEnemy(100);
 	
 	game.createWall(300);
+	
+	
 	grid.init();
 
-	inicio =  grid.grid[0][0];
-	// final = grid.grid[grid.cols-1][grid.rows-1]
-	grid.check();
+	grid.checkPlayer();
+	grid.checkEnemy();
+	grid.assignStart();
 	grid.assignTarget();
-	final = grid.target;
+
+
+	inicio =  grid.start;
+	final =  grid.target;
+
+	
 	algoritmo = new Astar(inicio,final);
-	console.log(`Target = ${grid.target.x} == ${grid.target.y}`)
+	console.log(`Target = ${inicio.x} && ${final.x}`)
+	
 }
 
 function draw() {
@@ -52,12 +60,17 @@ function draw() {
 	
 	confi.scl(64);
 	confi.setScreen(-game.player[0].pos.x,-game.player[0].pos.y);
-	grid.check();
+	
+	
+	
+	grid.checkPlayer();
+	grid.checkEnemy();
+	grid.assignTarget();
+	grid.assignStart();
 
-	// final = grid.check();
-	// final = grid.grid[grid.cols-1][grid.rows-1]
-	// grid.assignTarget();
-	// algoritmo = new Astar(grid.inicio,grid.target);
+	algoritmo.end = grid.target;
+	algoritmo.start = grid.start;
+
 	grid.show();
 	
 	

@@ -35,6 +35,14 @@ class Astar {
         return d;
     }
     run(){
+        let actual_start = this.start;
+        let actual_end = this.end;
+        
+        if(this.start !== actual_start && this.end !== actual_end){
+            console.log('Se cambio de inicio y final');
+            return;
+        }
+    
         if (this.open.length>0){
             
             let lowestCost = this.FindLowestCost(this.open);
@@ -60,7 +68,7 @@ class Astar {
             current.neighbors.forEach(element => {
                 if (this.close.includes(element) === false && !element.wall){
                     //element.f = gFunction(this.start,current)+heuristic(current,this.end);
-                    var tempG = current.g + 1;//element.g
+                    var tempG = current.g + 50;//element.g
 
                     var newPath = 1;
 

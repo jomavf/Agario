@@ -27,6 +27,7 @@ class Node {
         this.isThisWallinMe();
         
         this.containPlayer = false;
+        this.containEnemy = false;
 
     }
 
