@@ -2,12 +2,19 @@ class Astar {
     constructor(start,end){
         this.start = start;
         this.end = end;
+
+        this.copyStart = this.start;
+        this.copyEnd = this.end;
+        
         this.open = [];
         this.close = [];
+
+        this.path = [];
+
         this.success = false;
         this.noSolution = false;
+
         this.open.push(this.start);
-        this.path = []
     }
     
     FindLowestCost(arr){
@@ -35,12 +42,16 @@ class Astar {
         return d;
     }
     run(){
-        let actual_start = this.start;
-        let actual_end = this.end;
-        
-        if(this.start !== actual_start && this.end !== actual_end){
-            console.log('Se cambio de inicio y final');
-            return;
+
+        if(this.start !== this.copyStart || this.end !== this.copyEnd){
+            // console.log(`ENEMIGO X=${this.end.x} y=${this.end.y}`);
+            this.open = [];
+            this.open.push(this.start);
+            this.close = [];
+            this.path = [];
+            this.copyStart=this.start;
+            this.copyEnd = this.end;
+            console.log('Arrays Seteados');
         }
     
         if (this.open.length>0){
@@ -55,12 +66,13 @@ class Astar {
                 console.log('Success is True Were Done!! ByZetaGHost')
                
                 var temp = current;
-                this.path.push(temp);
-                //console.log(this.path);
-                while(temp.previous){
-                    this.path.push(temp.previous); 
-                    temp = temp.previous;
-                }  
+                //No se porque se cae esta parte pero ... esto imprime en azul el camino mas corto que hace
+                // this.path.push(temp);
+                // //console.log(this.path);
+                // while(temp.previous){
+                //     this.path.push(temp.previous); 
+                //     temp = temp.previous;
+                // }  
                            
                 //  noLoop();
             }
@@ -68,7 +80,7 @@ class Astar {
             current.neighbors.forEach(element => {
                 if (this.close.includes(element) === false && !element.wall){
                     //element.f = gFunction(this.start,current)+heuristic(current,this.end);
-                    var tempG = current.g + 50;//element.g
+                    var tempG = current.g + 1;//50;//element.g
 
                     var newPath = 1;
 

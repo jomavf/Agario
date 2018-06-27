@@ -104,7 +104,7 @@ class Grid {
         for (let i = 0; i < this.grid.length; i++) {
             for (let j = 0; j < this.grid[0].length; j++) {
                 if(this.grid[i][j].containPlayer==true){
-                    this.target = this.grid[i][j]
+                    this.target = this.grid[i][j];
                 }
             }
         }
