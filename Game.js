@@ -29,7 +29,7 @@ class Game{
         }
     createPlayer(n){
         for(let i = 0 ; i < n ; i++){
-            this.player[i] = new Player(0,0,15);
+            this.player[i] = new Player(-10,-10,15);
         }
     }
     showPlayer(){

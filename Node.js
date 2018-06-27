@@ -25,10 +25,12 @@ class Node {
         this.blue = 255;
         
         this.isThisWallinMe();
-        // this.containPlayer = [];
+        
+        this.containPlayer = false;
+
     }
 
-
+    
     isThisWallinMe(){
         for (let i = 0; i < game.wall.length; i++) {
             if(game.wall[i].pos.x >= this.x -width*3 &&
@@ -62,6 +64,9 @@ class Node {
         //fill(this.red,this.green,this.blue);
         if(this.wall){
             fill(0);
+        }
+        if(this.containPlayer){
+            fill(0,100,0,50);
         }
         // if (this.containPlayer.length>0){
         //     fill(0,0,255);

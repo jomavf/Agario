@@ -52,7 +52,8 @@ class Astar {
                 while(temp.previous){
                     this.path.push(temp.previous); 
                     temp = temp.previous;
-                }             
+                }  
+                           
                 //  noLoop();
             }
 
@@ -61,19 +62,25 @@ class Astar {
                     //element.f = gFunction(this.start,current)+heuristic(current,this.end);
                     var tempG = current.g + 1;//element.g
 
+                    var newPath = 1;
+
                     if (this.open.includes(element)){
                         if(tempG < element.g){
                             element.g = tempG;
+                            newPath=true;
                         }
                     }
                     else{
                         element.g = tempG;
+                        newPath = true;
                         this.open.push(element);
                     }
 
-                    element.h = this.heuristic(element,this.end);
-                    element.f = element.g + element.h;
-                    element.previous = current;
+                    if(newPath){
+                        element.h = this.heuristic(element,this.end);
+                        element.f = element.g + element.h;
+                        element.previous = current;
+                    }
                 }
             });
         }
@@ -99,5 +106,13 @@ class Astar {
             this.path[i].green = 0;
             this.path[i].blue = 255;
         }
+
+        // stroke(0,255,0);
+        // beginShape();
+        //     for (var i = 0 ; i < this.path.length;i++){
+        //         vertex(this.path[i].i * 50 , this.path[i].j * 50)
+        //     }
+        // endShape();
+
     }
 }

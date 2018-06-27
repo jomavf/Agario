@@ -26,6 +26,9 @@ class Grid {
             this.grid[i] = new Array(this.rows);
         }
 
+        this.target = this.grid[this.cols-1][this.rows-1];
+        this.start = this.grid[0][0];
+
         // this.rectangulos = [];
     }
     init(){
@@ -72,5 +75,33 @@ class Grid {
         //     this.rectangulos[i].addNeighbors();
         // }
         pop();
+    }
+    check(){
+        for (let i = 0; i < this.grid.length; i++) {
+            for (let j = 0; j < this.grid[0].length; j++) {
+                
+                if(game.player[0].pos.x >= this.grid[i][j].x -width*3 &&
+                game.player[0].pos.x <= this.grid[i][j].x + this.grid[i][j].pw -width*3 &&
+                game.player[0].pos.y >= this.grid[i][j].y -height*3 &&
+                game.player[0].pos.y <= this.grid[i][j].y + this.grid[i][j].ph -height*3 ){
+                    // console.log(`gridX = ${this.grid[i][j].x} gridY = ${this.grid[i][j].y} `)
+                    this.grid[i][j].containPlayer=true;
+                }
+                else{
+                    this.grid[i][j].containPlayer=false;
+                    // this.target = this.grid[this.cols-1][this.rows-1];
+                    // this.target = this.grid[i][j]
+                }
+            }
+        }   
+    }
+    assignTarget(){
+        for (let i = 0; i < this.grid.length; i++) {
+            for (let j = 0; j < this.grid[0].length; j++) {
+                if(this.grid[i][j].containPlayer==true){
+                    this.target = this.grid[i][j]
+                }
+            }
+        }
     }
 }

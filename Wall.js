@@ -28,7 +28,7 @@ class Wall extends Circle{
             vertex(x+ this.pos.x,y+ this.pos.y);
         }
         endShape(CLOSE);
-        this.showText();
+        // this.showText();
         pop();
 
     }

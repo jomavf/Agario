@@ -3,6 +3,8 @@ var confi;
 var player;
 var grid;
 var algoritmo;
+var inicio;
+var final;
 //Hay que cambiar la pantalla a un valor mas standar sino dara problemas
 var my_windowWidth = 1250;
 var my_windowHeight = 750;
@@ -25,8 +27,13 @@ function setup() {
 	game.createWall(300);
 	grid.init();
 
-	algoritmo = new Astar(grid.grid[0][0],grid.grid[grid.cols-1][grid.rows-1]);
-
+	inicio =  grid.grid[0][0];
+	// final = grid.grid[grid.cols-1][grid.rows-1]
+	grid.check();
+	grid.assignTarget();
+	final = grid.target;
+	algoritmo = new Astar(inicio,final);
+	console.log(`Target = ${grid.target.x} == ${grid.target.y}`)
 }
 
 function draw() {
@@ -45,7 +52,14 @@ function draw() {
 	
 	confi.scl(64);
 	confi.setScreen(-game.player[0].pos.x,-game.player[0].pos.y);
+	grid.check();
+
+	// final = grid.check();
+	// final = grid.grid[grid.cols-1][grid.rows-1]
+	// grid.assignTarget();
+	// algoritmo = new Astar(grid.inicio,grid.target);
 	grid.show();
+	
 	
 	
 	
@@ -65,7 +79,9 @@ function draw() {
 	game.checkPlayer();
 	game.checkEnemy();
 	game.infinyLife();
-	
+
+	//checkear las posiciones del jugador por ahora
+
 	algoritmo.run();
 }
 
