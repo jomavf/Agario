@@ -40,7 +40,7 @@ function landingPage() {
 landingPage.prototype.setup = function () {
 
 	this.circlesBounce = [];
-	for (let index = 0; index < random(5, 10); index++) {
+	for (let index = 0; index < random(5, 20); index++) {
 		let _r = random(20, 100);
 		let _x = random(_r + 1, width - _r - 1);
 		let _y = random(_r + 1, height - _r - 1);
@@ -75,10 +75,11 @@ landingPage.prototype.mousePressed = function () {
 function mainGame() {
 
 }
+//---------------------------------------------------------//
 mainGame.prototype.setup = function () {
 	game = new Game();
 	confi = new Configuration();
-	grid = new Grid(100, 100);
+	grid = new Grid(100,100);
 
 	//Vida infinita
 	game.setInfinityMode(true);
@@ -106,6 +107,8 @@ mainGame.prototype.setup = function () {
 	console.log(`Target = ${inicio.x} && ${final.x}`)
 }
 
+
+//---------------------------------------------------------//
 mainGame.prototype.draw = function () {
 
 	//Si pierdes deja de loopear
@@ -160,12 +163,14 @@ mainGame.prototype.draw = function () {
 	algoritmo.run();
 }
 
+
+//---------------------------------------------------------//
 mainGame.prototype.keyPressed = function () {
 	if (keyCode === ENTER) {
 		game.player[0].r *= 2;
 	}
 }
-
+//---------------------------------------------------------//
 mainGame.prototype.mousePressed = function () {
 	game.player[0].r /= 2;
 }

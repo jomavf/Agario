@@ -17,7 +17,7 @@ class Grid {
         this.target = this.grid[this.cols-1][this.rows-1];
         this.start = this.grid[0][0];
         
-        // this.rectangulos = [];
+        // this.rectangulos = [];   
     }
     init(){
         push();
@@ -88,7 +88,7 @@ class Grid {
             for (let j = 0; j < this.grid[0].length; j++) {
                 
                 if(game.enemy[0].pos.x >= this.grid[i][j].x -width*3 &&
-                    game.enemy[0].pos.x <= this.grid[i][j].x + this.grid[i][j].pw -width*3 &&
+                    game.enemy[0].pos.x <= this.grid[i][j].x + this.grid[i  ][j].pw -width*3 &&
                     game.enemy[0].pos.y >= this.grid[i][j].y -height*3 &&
                     game.enemy[0].pos.y <= this.grid[i][j].y + this.grid[i][j].ph -height*3 ){
                         // console.log(`gridX = ${this.grid[i][j].x} gridY = ${this.grid[i][j].y} `)
