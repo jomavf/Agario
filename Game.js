@@ -35,6 +35,10 @@ class Game{
     showPlayer(){
         for(let i = 0 ; i < this.player.length ; i++){
             this.player[i].update();
+            
+            let point = new Point(this.player[i].pos.x,this.player[i].pos.y,this.player[i]);
+            qtree.insert(point);
+
             this.player[i].show(); 
         } 
     } 
@@ -43,6 +47,8 @@ class Game{
             let x = random(-width*3,width*3);
             let y = random(-height*3,height*3);
             this.food[i] = new Food(x,y,5);
+
+
         }
     }
     updateFood(n){
@@ -52,7 +58,11 @@ class Game{
                 let x = random(-width*3,width*3);
                 let y = random(-height*3,height*3);
                 let newFood = new Food(x,y,5);
+
                 this.food.push(newFood);
+
+                let point = new Point(x,y,newFood);
+                qtree.insert(point);
             // }
         }
     }
@@ -79,33 +89,48 @@ class Game{
                 let y = random(-width*3,height*3);
                 let newEnemy = new Enemy(x,y,random(15,40),'Bot '+name);
                 this.enemy.push(newEnemy);
+
+                
+                let point = new Point(this.enemy[i].pos.x,this.enemy[i].pos.y,this.enemy[i]);
+                qtree.insert(point);
+
             }
         }
     }
     showEnemy(){
         for (let i = this.enemy.length-1; i >= 0; i--) {
+            if(i === 0){
+                this.enemy[i].elegido = true;
+                this.enemy[i].update(algoritmo.vector);
+
+                let point = new Point(this.enemy[i].pos.x,this.enemy[i].pos.y,this.enemy[i]);
+                qtree.insert(point);
+            }
             this.enemy[i].update();
             this.enemy[i].show();
+
+            let point = new Point(this.enemy[i].pos.x,this.enemy[i].pos.y,this.enemy[i]);
+                qtree.insert(point);
         }
     }
     createWall(n){
         for (let i = 0; i < n; i++) {
             push();
-            // translate(0,0)
-            // translate(-width*3,-height*3)
-            // translate(width/2,height/2);
-
-            // let x = random(width*6);
-            // let y = random(height*6);
             let x = random(-width*3,width*3);
             let y = random(-height*3,height*3);
-            // let x = -width*3 ;
-            // let y = -height*3 ;
             this.wall[i] = new Wall(x,y,random(20,30));
             // let wx = this.wall[i].pos.x;
             // let wy = this.wall[i].pos.y;
             // console.log(`x=${wx} y=${wy}`)
             pop();
+        }
+    }
+    updateWall(){
+        for (let i = 0; i < this.wall.length; i++) {
+
+            let point = new Point(this.wall[i].pos.x,this.wall[i].pos.y,this.wall[i]);
+            qtree.insert(point);
+
         }
     }
     showWall(){

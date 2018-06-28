@@ -81,35 +81,46 @@ mainGame.prototype.setup = function () {
 	confi = new Configuration();
 	grid = new Grid(100,100);
 
-	//Vida infinita
+
+	//Vida infinitas
 	game.setInfinityMode(true);
 	//Se crea entidades
+	game.createWall(300);
 	game.createPlayer(1);
 	game.createFood(500);
 	game.createEnemy(100);
 
-	game.createWall(300);
-
-
+	
+	
 	grid.init();
-
+	
 	grid.checkPlayer();
 	grid.checkEnemy();
 	grid.assignStart();
 	grid.assignTarget();
-
-
+	
+	
 	inicio = grid.start;
 	final = grid.target;
-
-
+	
+	
 	algoritmo = new Astar(inicio, final);
-	console.log(`Target = ${inicio.x} && ${final.x}`)
+	// console.log(`Target = ${inicio.x} && ${final.x}`)
 }
 
-
+let qtree;
 //---------------------------------------------------------//
 mainGame.prototype.draw = function () {
+	
+	
+	push();
+	translate(-width*3,-height*3);
+	let boundary = new Rectangle(0,0,width*6,height*6);
+	pop();
+	
+	qtree = new QuadTree(boundary,10);
+
+	game.updateWall();
 
 	//Si pierdes deja de loopear
 	if (game.gameOver) {

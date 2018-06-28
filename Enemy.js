@@ -4,12 +4,14 @@ class Enemy extends Circle {
         this.type = "enemy";
         this.direction = createVector(1,0);
         this.anguloRotacion = random(0,2*PI);
-
+        this.v = createVector(0,0);
+        this.elegido = false;
     }
     applyForce(force){
         this.acc.add(force);
     }
-    update(){
+    update(vector=createVector(game.player[0].pos.x-this.pos.x,
+        game.player[0].pos.y-this.pos.y)){
         let  newvel = createVector(0,0);        
         let mag = 5;
         
@@ -18,11 +20,20 @@ class Enemy extends Circle {
         
         if ( this.r >= game.player[0].r){
             // newvel = createVector(game.player[0].pos.x-this.pos.x,
-            //     game.player[0].pos.y-this.pos.y);
-            newvel = algoritmo.vector;
+            // game.player[0].pos.y-this.pos.y);
+
+            // newvel = algoritmo.vector;
+            newvel = vector;
+            this.v = newvel;
+
         }else{
-            // newvel = p5.Vector.random2D();
-            newvel = algoritmo.vector;
+            if(this.elegido === false){
+                newvel = p5.Vector.random2D();
+                this.v = newvel;
+            }else{
+                newvel = algoritmo.vector;
+                this.v = newvel;
+            }
         }
         newvel.setMag(mag/(this.r*0.1));   
 
@@ -30,8 +41,6 @@ class Enemy extends Circle {
         this.pos.add(this.vel);
     }
     show(){
-
-        
 
         strokeWeight(2.5);
         stroke(this.c_r,this.c_g,this.c_b);
@@ -45,7 +54,8 @@ class Enemy extends Circle {
             let y = cos(i) * this.r;
             vertex(x + this.pos.x,y + this.pos.y);
         }
-        this.drawArrow();
+
+        this.drawArrow(this.v);
         endShape(CLOSE);
 
         this.showText();
@@ -65,7 +75,7 @@ class Enemy extends Circle {
             return false;
         }
     }
-    drawArrow() {
+    drawArrow(vector) {
         push();
         let playerxy;
         let xy;
@@ -77,7 +87,7 @@ class Enemy extends Circle {
             xy = createVector(this.pos.x,this.pos.y);
         }
         // let vec = p5.Vector.sub(playerxy,xy);
-        let vec = algoritmo.vector;
+        let vec = vector;
         stroke(this.c_r,this.c_g,this.c_b);
         strokeWeight(3);
         fill(0);
