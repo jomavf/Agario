@@ -13,10 +13,10 @@ class Rectangle {
         this.h = h;
     }    
     contains(circle){
-        return(circle.pos.x > this.x - this.w &&
-        circle.pos.x < this.x + this.w &&
-        circle.pos.y > this.y - this.h &&
-        circle.pos.y < this.y + this.h );
+        return(circle.pos.x >= this.x - this.w &&
+        circle.pos.x <= this.x + this.w &&
+        circle.pos.y >= this.y - this.h &&
+        circle.pos.y <= this.y + this.h );
     }
 }
 class QuadTree {

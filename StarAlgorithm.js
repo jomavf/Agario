@@ -43,10 +43,53 @@ class Astar {
         let d = dist(current.x,current.y,end.x,end.y);
         return d;
     }
+
+    //function para comprobar si 2 nodos han cambiado
+    isDifferent(start,end){
+        //Si son diferentes es porque han cambiado
+        if(start !== this.copyStart || end !== this.copyEnd){
+            return true;
+        }else{
+            return false;
+        }
+          
+    }
+
     run(){ 
-            if(this.start !== this.copyStart || this.end !== this.copyEnd){
-                // console.log(`ENEMIGO X=${this.end.x} y=${this.end.y}`);
+        
+        // if(this.start !== this.copyStart || this.end !== this.copyEnd){
+            
+        //     // console.log(`ENEMIGO X=${this.end.x} y=${this.end.y}`);
+        //     this.open = [];
+        //     this.open.push(this.start);
+        //     this.close = [];
+        //     this.path = [];
+        //     this.copyStart=this.start;
+        //     this.copyEnd = this.end;
+        //     console.log('Set');
+        // }
+
+        if(this.success === true){
+            if(this.isDifferent(this.start,this.end)){
+                this.success=false;
+            }
+        }else{
+
+            if(this.isDifferent(this.start,this.end)){
+
+
+                for (let i = 0; i < this.open.length; i++) {
+                    this.open[i].in = false;
+                }
+
+                for (let i = 0; i < this.close.length; i++) {
+                    this.close[i].in = false;
+                }
+
                 this.open = [];
+
+                // this.start.in = true;
+
                 this.open.push(this.start);
                 this.close = [];
                 this.path = [];
@@ -54,17 +97,20 @@ class Astar {
                 this.copyEnd = this.end;
                 console.log('Set');
             }
-        
-            if (this.open.length>0){
+            
+            
+            if (this.open.length>0 ){
                 
                 let lowestCost = this.FindLowestCost(this.open);
                 let current = this.open[lowestCost];
                 this.removeFromArray(this.open,current);
+                current.in = false;
                 this.close.push(current);
+                current.in = true;
     
                 if(current === this.end){
                     this.success = true;
-                    console.log('Success is True Were Done!! ByZetaGHost')
+                    console.log('Success Were Done!! ByZetaGHost')
                    
                     var temp = current;
                     //No se porque se cae esta parte pero ... esto imprime en azul el camino mas corto que hace
@@ -94,6 +140,7 @@ class Astar {
                         else{
                             element.g = tempG;
                             newPath = true;
+                            element.in = true;
                             this.open.push(element);
                         }
     
@@ -106,6 +153,7 @@ class Astar {
                 });
             }
             else{
+                //Aqui tendria que terminar de analizar todo el mapa para deicr que no hay solucion
                 this.noSolution = false;
                 console.log('No hay solucion');
                 noLoop();
@@ -127,8 +175,14 @@ class Astar {
                 this.path[i].green = 0;
                 this.path[i].blue = 255;
             }
+            // for (let i = 0; i < grid.grid.length; i++) {
+            //     for (let j = 0; j < grid.grid[0].length; j++) {
+            //         if()
+            //     }                
+            // }
+
     
-    
+            
             // stroke(0,255,0);
             // beginShape();
             //     for (var i = 0 ; i < this.path.length;i++){
@@ -140,8 +194,9 @@ class Astar {
                 let y = game.enemy[0].pos.y;
                 var vector_direccion = createVector((this.close[3].x-width*3) - x,(this.close[3].y-height*3) - y);
                 this.vector = vector_direccion;
-                console.log(this.vector);
+                // console.log(this.vector);
             }
         }
+    }
+}     
         
-}

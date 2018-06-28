@@ -28,7 +28,9 @@ class Node {
         
         this.containPlayer = false;
         this.containEnemy = false;
-
+        
+        //Atributo para saber si esta en algun arreglo
+        this.in = false;
     }
 
     
@@ -57,11 +59,11 @@ class Node {
     show(){
         // var w = this.width / this.cols;
         // var h = this.height / this.rows;
-        if(this.red == 255 && this.green == 255 && this.blue == 255){
+        if(this.red === 255 && this.green === 255 && this.blue === 255){
             noFill();
         }
         //Este else si sirve yo del futuro
-        else{
+        else {
             fill(this.red,this.green,this.blue);
         }
         //fill(this.red,this.green,this.blue);
@@ -74,7 +76,9 @@ class Node {
         if(this.containEnemy){
             fill(100,100,0,50);
         }
-        
+        if(!this.in && !this.containPlayer && !this.containEnemy && !this.wall){
+            noFill();
+        }
         // if (this.containPlayer.length>0){
         //     fill(0,0,255);
         // }
