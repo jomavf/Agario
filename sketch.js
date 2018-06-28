@@ -78,7 +78,7 @@ function mainGame() {
 mainGame.prototype.setup = function () {
 	game = new Game();
 	confi = new Configuration();
-	grid = new Grid(50, 50);
+	grid = new Grid(100, 100);
 
 	//Vida infinita
 	game.setInfinityMode(true);
