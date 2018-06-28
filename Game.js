@@ -37,7 +37,7 @@ class Game{
             this.player[i].update();
             
             let point = new Point(this.player[i].pos.x,this.player[i].pos.y,this.player[i]);
-            qtree.insert(point);
+            qtreeM.insert(point);
 
             this.player[i].show(); 
         } 
@@ -62,7 +62,7 @@ class Game{
                 this.food.push(newFood);
 
                 let point = new Point(x,y,newFood);
-                qtree.insert(point);
+                qtreeM.insert(point);
             // }
         }
     }
@@ -92,7 +92,7 @@ class Game{
 
                 
                 let point = new Point(this.enemy[i].pos.x,this.enemy[i].pos.y,this.enemy[i]);
-                qtree.insert(point);
+                qtreeM.insert(point);
 
             }
         }
@@ -104,13 +104,13 @@ class Game{
                 this.enemy[i].update(algoritmo.vector);
 
                 let point = new Point(this.enemy[i].pos.x,this.enemy[i].pos.y,this.enemy[i]);
-                qtree.insert(point);
+                qtreeM.insert(point);
             }
             this.enemy[i].update();
             this.enemy[i].show();
 
             let point = new Point(this.enemy[i].pos.x,this.enemy[i].pos.y,this.enemy[i]);
-                qtree.insert(point);
+                qtreeM.insert(point);
         }
     }
     createWall(n){
@@ -129,7 +129,7 @@ class Game{
         for (let i = 0; i < this.wall.length; i++) {
 
             let point = new Point(this.wall[i].pos.x,this.wall[i].pos.y,this.wall[i]);
-            qtree.insert(point);
+            qtreeM.insert(point);
 
         }
     }
@@ -141,6 +141,8 @@ class Game{
     checkPlayer(){ 
             for (let i = this.player.length - 1; i >= 0; i--) {
                 
+                // let range = new Circle()
+                // let foodrange = qtreeM.query(range,found);
                 for (let j = this.food.length-1; j >= 0; j--){
                     if (this.player[i].eat(this.food[j])){
                         this.food.splice(j,1);
@@ -151,12 +153,6 @@ class Game{
                         this.enemy.splice(j,1);
                     }
                 } 
-                for (let j = this.player.sons-1; j >= 0; j--){
-                    if(this.player[i].eat(this.player[j])){
-                        this.player.splice(j,1);
-                    }
-                }
-                
             }
     }        
     checkEnemy(){

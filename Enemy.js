@@ -28,6 +28,7 @@ class Enemy extends Circle {
 
         }else{
             if(this.elegido === false){
+                
                 newvel = p5.Vector.random2D();
                 this.v = newvel;
             }else{

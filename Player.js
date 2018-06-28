@@ -7,7 +7,7 @@ class Player extends Circle{
     }
     update(){   
         let  newvel = createVector(mouseX-width/2,mouseY-height/2);
-        let mag = 20;
+        let mag = 5;
 
         this.pos.x = constrain(this.pos.x ,-width*3,width*3)
         this.pos.y = constrain(this.pos.y ,-height*3,height*3)

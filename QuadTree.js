@@ -6,14 +6,14 @@ class Point {
     }
   }
   
-  class Rectangle {
+  class RectangleQT {
     constructor(x, y, w, h) {
       this.x = x;
       this.y = y;
       this.w = w;
       this.h = h;
     }
-  
+    
     contains(point) {
       return (point.x >= this.x - this.w &&
         point.x <= this.x + this.w &&
@@ -33,55 +33,55 @@ class Point {
   }
   
   // circle class for a circle shaped query
+
+  class CircleQT {
+    constructor(x, y, r) {
+      this.x = x;
+      this.y = y;
+      this.r = r;
+      this.rSquared = this.r * this.r;
+    }
   
-  // class Circle {
-  //   constructor(x, y, r) {
-  //     this.x = x;
-  //     this.y = y;
-  //     this.r = r;
-  //     this.rSquared = this.r * this.r;
-  //   }
+    contains(point) {
+      // check if the point is in the circle by checking if the euclidean distance of
+      // the point and the center of the circle if smaller or equal to the radius of
+      // the circle
+      let d = Math.pow((point.x - this.x), 2) + Math.pow((point.y - this.y), 2);
+      return d <= this.rSquared;
+    }
   
-  //   contains(point) {
-  //     // check if the point is in the circle by checking if the euclidean distance of
-  //     // the point and the center of the circle if smaller or equal to the radius of
-  //     // the circle
-  //     let d = Math.pow((point.x - this.x), 2) + Math.pow((point.y - this.y), 2);
-  //     return d <= this.rSquared;
-  //   }
+    intersects(range) {
   
-  //   intersects(range) {
+      let xDist = Math.abs(range.x - this.x);
+      let yDist = Math.abs(range.y - this.y);
   
-  //     let xDist = Math.abs(range.x - this.x);
-  //     let yDist = Math.abs(range.y - this.y);
+      // radius of the circle
+      let r = this.r;
   
-  //     // radius of the circle
-  //     let r = this.r;
+      let w = range.w;
+      let h = range.h;
   
-  //     let w = range.w;
-  //     let h = range.h;
+      let edges = Math.pow((xDist - w), 2) + Math.pow((yDist - h), 2);
   
-  //     let edges = Math.pow((xDist - w), 2) + Math.pow((yDist - h), 2);
+      // no intersection
+      if (xDist > (r + w) || yDist > (r + h))
+        return false;
   
-  //     // no intersection
-  //     if (xDist > (r + w) || yDist > (r + h))
-  //       return false;
+      // intersection within the circle
+      if (xDist <= w || yDist <= h)
+        return true;
   
-  //     // intersection within the circle
-  //     if (xDist <= w || yDist <= h)
-  //       return true;
-  
-  //     // intersection on the edge of the circle
-  //     return edges <= this.rSquared;
-  //   }
-  // }
+      // intersection on the edge of the circle
+      return edges <= this.rSquared;
+    }
+  }
   
   class QuadTree {
     constructor(boundary, capacity) {
       if (!boundary) {
         throw TypeError('boundary is null or undefined');
       }
-      if (!(boundary instanceof Rectangle)) {
+      if (!(boundary instanceof RectangleQT)) {
         throw TypeError('boundary should be a Rectangle');
       }
       if (typeof capacity !== 'number') {
@@ -102,13 +102,13 @@ class Point {
       let w = this.boundary.w / 2;
       let h = this.boundary.h / 2;
   
-      let ne = new Rectangle(x + w, y - h, w, h);
+      let ne = new RectangleQT(x + w, y - h, w, h);
       this.northeast = new QuadTree(ne, this.capacity);
-      let nw = new Rectangle(x - w, y - h, w, h);
+      let nw = new RectangleQT(x - w, y - h, w, h);
       this.northwest = new QuadTree(nw, this.capacity);
-      let se = new Rectangle(x + w, y + h, w, h);
+      let se = new RectangleQT(x + w, y + h, w, h);
       this.southeast = new QuadTree(se, this.capacity);
-      let sw = new Rectangle(x - w, y + h, w, h);
+      let sw = new RectangleQT(x - w, y + h, w, h);
       this.southwest = new QuadTree(sw, this.capacity);
   
       this.divided = true;

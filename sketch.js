@@ -108,17 +108,17 @@ mainGame.prototype.setup = function () {
 	// console.log(`Target = ${inicio.x} && ${final.x}`)
 }
 
-let qtree;
+let qtreeM;
 //---------------------------------------------------------//
 mainGame.prototype.draw = function () {
 	
 	
 	push();
-	translate(-width*3,-height*3);
-	let boundary = new Rectangle(0,0,width*6,height*6);
+	translate(0,0);
+	let boundary = new RectangleQT(-width*3,-height*3,width*3,height*3);
 	pop();
 	
-	qtree = new QuadTree(boundary,10);
+	qtreeM = new QuadTree(boundary,10);
 
 	game.updateWall();
 
@@ -164,7 +164,9 @@ mainGame.prototype.draw = function () {
 
 
 	//Verifica colisiones
-	//game.checkWall();
+
+	// game.checkWall();
+
 	game.checkPlayer();
 	game.checkEnemy();
 	game.infinyLife();

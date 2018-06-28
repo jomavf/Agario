@@ -127,7 +127,13 @@ class Astar {
                 current.neighbors.forEach(element => {
                     if (this.close.includes(element) === false && !element.wall){
                         //element.f = gFunction(this.start,current)+heuristic(current,this.end);
-                        var tempG = current.g + 50;//50;//element.g
+                        let costo = 50
+
+                        if(element.diagonal === true){
+                            costo = sqrt(2)*50;
+                        }
+
+                        var tempG = current.g + costo;//50;//element.g
     
                         var newPath = 1;
     
